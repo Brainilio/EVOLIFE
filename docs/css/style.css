@@ -1,12 +1,10 @@
 protero { 
     background-image: url(../img/protero.png); 
-    width:130px; height: 110px;
-    
-    /* kleur variatie met css */
-    -webkit-filter: hue-rotate(90deg);
-    filter: hue-rotate(90deg);
-    
-    /* animatie met css */
-    animation: fishanimation 4s ease-in-out infinite alternate;
 
+}
+
+background {
+    background-image: url(../img/water.png);
+    width: 100%; height: 100%; 
+    background-size: cover;
 }
