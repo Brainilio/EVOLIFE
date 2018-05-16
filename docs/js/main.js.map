@@ -1,0 +1,1 @@
+{"version":3,"file":"main.js","sourceRoot":"","sources":["../../dev/game.ts","../../dev/protero.ts"],"names":[],"mappings":";ACAA;IAKI;QAJQ,MAAC,GAAU,CAAC,CAAA;QACZ,MAAC,GAAU,CAAC,CAAA;QAIhB,IAAI,CAAC,OAAO,GAAG,QAAQ,CAAC,aAAa,CAAC,SAAS,CAAC,CAAA;QAChD,QAAQ,CAAC,IAAI,CAAC,WAAW,CAAC,IAAI,CAAC,OAAO,CAAC,CAAA;IAC3C,CAAC;IACL,cAAC;AAAD,CAAC,AATD,IASC"}
