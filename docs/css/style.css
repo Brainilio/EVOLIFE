@@ -37,10 +37,8 @@ body {
   }
 
   paddle {
-    background-color:black;
-    width:25px; height:100px;
-    display: block;
-    position: absolute;
+    background-image: url(../img/protero.png);
+    width:145px; height:120px;
     
 
 }

@@ -1,10 +1,10 @@
 "use strict";
 var Bubble = (function () {
     function Bubble() {
-        this.yposition = Math.random() * window.innerHeight;
-        this.xposition = Math.random() * window.innerWidth;
         this.element = document.createElement("bubble");
         document.body.appendChild(this.element);
+        this.yposition = Math.random() * window.innerHeight;
+        this.xposition = Math.random() * window.innerWidth;
     }
     Bubble.prototype.update = function () {
         this.element.style.left = this.xposition + "px";
