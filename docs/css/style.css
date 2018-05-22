@@ -35,3 +35,12 @@ body {
       transform: translateY(80px);
     }
   }
+
+  paddle {
+    background-color:black;
+    width:25px; height:100px;
+    display: block;
+    position: absolute;
+    
+
+}

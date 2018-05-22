@@ -4,6 +4,7 @@
         private xposition = Math.random() * window.innerWidth
         private element:HTMLElement;
         
+        
     
         constructor() { 
             
