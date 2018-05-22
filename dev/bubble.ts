@@ -11,9 +11,8 @@
             this.element = document.createElement("bubble")
             document.body.appendChild(this.element)
             
-            this.yposition = Math.random() * window.innerHeight
-            this.xposition = Math.random() * window.innerWidth
-
+            this.xposition = this.randomNumber(0, window.innerWidth-130)
+            this.yposition = this.randomNumber(0, window.innerHeight-130)
     
     
         }
@@ -22,6 +21,14 @@
             this.element.style.left = this.xposition + "px";
             this.element.style.top = this.yposition + "px";
         }
+
+    
+        randomNumber(min:number, max:number) {
+            let a:number = Math.floor(Math.random() * (max - min + 1) ) + min;
+            return a
+        }
+    
     }
     
+
     

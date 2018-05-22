@@ -3,12 +3,16 @@ var Bubble = (function () {
     function Bubble() {
         this.element = document.createElement("bubble");
         document.body.appendChild(this.element);
-        this.yposition = Math.random() * window.innerHeight;
-        this.xposition = Math.random() * window.innerWidth;
+        this.xposition = this.randomNumber(0, window.innerWidth - 130);
+        this.yposition = this.randomNumber(0, window.innerHeight - 130);
     }
     Bubble.prototype.update = function () {
         this.element.style.left = this.xposition + "px";
         this.element.style.top = this.yposition + "px";
+    };
+    Bubble.prototype.randomNumber = function (min, max) {
+        var a = Math.floor(Math.random() * (max - min + 1)) + min;
+        return a;
     };
     return Bubble;
 }());
