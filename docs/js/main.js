@@ -1,6 +1,8 @@
 "use strict";
 var Bubble = (function () {
     function Bubble() {
+        this.xspeed = 2;
+        this.yspeed = 2;
         this.element = document.createElement("bubble");
         document.body.appendChild(this.element);
         this.xposition = this.randomNumber(0, window.innerWidth - 130);
@@ -9,10 +11,20 @@ var Bubble = (function () {
     Bubble.prototype.update = function () {
         this.element.style.left = this.xposition + "px";
         this.element.style.top = this.yposition + "px";
+        if (this.xposition > window.innerWidth || this.xposition < 0) {
+            this.xspeed = this.xspeed * -1;
+        }
+        if (this.yposition > window.innerHeight || this.yposition < 0) {
+            this.yspeed = this.yspeed * -1;
+        }
+        this.element.style.transform = "translate($(this.xposition)px, $(this.yposition)px)";
     };
     Bubble.prototype.randomNumber = function (min, max) {
         var a = Math.floor(Math.random() * (max - min + 1)) + min;
         return a;
+    };
+    Bubble.prototype.getRectangle = function () {
+        return this.element.getBoundingClientRect();
     };
     return Bubble;
 }());

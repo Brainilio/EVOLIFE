@@ -44,10 +44,10 @@ class Paddle {
                 this.downSpeed = 5
                 break
             case this.leftkey:
-                this.leftSpeed = 5 
+                this.leftSpeed = 5
                 break 
             case this.rightkey: 
-                this.rightSpeed = 5 
+                this.rightSpeed = 5
                 break 
 
         }
@@ -78,6 +78,7 @@ class Paddle {
         if (newY > 0 && newY + 100 < window.innerHeight) this.y = newY
         if (newX > 0 && newX + 100 < window.innerWidth) this.x = newX
         this.div.style.transform = `translate(${this.x}px, ${this.y}px)`
+
     }
 
 }
