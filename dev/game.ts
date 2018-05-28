@@ -1,35 +1,20 @@
-
-
-class Game {
-    private paddle:Paddle
-    
-
-    constructor() {
-        for(let i = 0; i<25; i++) { 
-            let d = new Bubble()
-            d.update();
-        }
-
-       
-        this.paddle = new Paddle()
-       
-        
-       
-    
-    this.gameLoop()
-  
+class Game { 
+    screen:any
+    constructor(){ 
+        this.screen = new StartScreen()
+        this.gameLoop()
     }
-   
-    private gameLoop(){
-        
-        this.paddle.update()
-        
-    requestAnimationFrame(()=>this.gameLoop())
-                      
-}      
-   } 
 
 
-   window.addEventListener("load", () => {
-    new Game()
-   }) 
+gameLoop(){
+this.screen.update()
+requestAnimationFrame(()=>this.gameLoop())
+           
+}    
+
+showPlayScreen() {
+    document.body.innerHTML = "niks"
+    this.screen = new Playscreen
+}
+
+}

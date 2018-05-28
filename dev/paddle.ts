@@ -81,4 +81,8 @@ class Paddle {
 
     }
 
+    public getRectangleq() { 
+        return this.div.getBoundingClientRect()
+    }
+
 }

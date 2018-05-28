@@ -1,8 +1,6 @@
 "use strict";
 var Bubble = (function () {
     function Bubble() {
-        this.xspeed = 2;
-        this.yspeed = 2;
         this.element = document.createElement("bubble");
         document.body.appendChild(this.element);
         this.xposition = this.randomNumber(0, window.innerWidth - 130);
@@ -11,13 +9,9 @@ var Bubble = (function () {
     Bubble.prototype.update = function () {
         this.element.style.left = this.xposition + "px";
         this.element.style.top = this.yposition + "px";
-        if (this.xposition > window.innerWidth || this.xposition < 0) {
-            this.xspeed = this.xspeed * -1;
-        }
-        if (this.yposition > window.innerHeight || this.yposition < 0) {
-            this.yspeed = this.yspeed * -1;
-        }
-        this.element.style.transform = "translate($(this.xposition)px, $(this.yposition)px)";
+    };
+    Bubble.prototype.dead = function () {
+        (this.element.classList.add("dead"), 5000);
     };
     Bubble.prototype.randomNumber = function (min, max) {
         var a = Math.floor(Math.random() * (max - min + 1)) + min;
@@ -30,23 +24,20 @@ var Bubble = (function () {
 }());
 var Game = (function () {
     function Game() {
-        for (var i = 0; i < 25; i++) {
-            var d = new Bubble();
-            d.update();
-        }
-        this.paddle = new Paddle();
+        this.screen = new StartScreen();
         this.gameLoop();
     }
     Game.prototype.gameLoop = function () {
         var _this = this;
-        this.paddle.update();
+        this.screen.update();
         requestAnimationFrame(function () { return _this.gameLoop(); });
+    };
+    Game.prototype.showPlayScreen = function () {
+        document.body.innerHTML = "niks";
+        this.screen = new Playscreen;
     };
     return Game;
 }());
-window.addEventListener("load", function () {
-    new Game();
-});
 var Paddle = (function () {
     function Paddle() {
         var _this = this;
@@ -109,8 +100,48 @@ var Paddle = (function () {
             this.x = newX;
         this.div.style.transform = "translate(" + this.x + "px, " + this.y + "px)";
     };
+    Paddle.prototype.getRectangleq = function () {
+        return this.div.getBoundingClientRect();
+    };
     return Paddle;
 }());
+var Playscreen = (function () {
+    function Playscreen() {
+        this.score = -2;
+        this.scoreElement = document.getElementsByTagName('score')[0];
+        this.bubbles = [];
+        for (var i = 0; i < 10; i++) {
+            var d = new Bubble();
+            this.bubbles.push(d);
+        }
+        this.paddle = new Paddle();
+        this.paddle;
+        this.update();
+    }
+    Playscreen.prototype.update = function () {
+        for (var _i = 0, _a = this.bubbles; _i < _a.length; _i++) {
+            var b = _a[_i];
+            var hit = this.checkCollision(this.paddle.getRectangle(), b.getRectangle());
+            if (hit) {
+                b.dead();
+                this.score++;
+                this.scoreElement.innerHTML = "Score: " + this.score;
+            }
+            b.update();
+        }
+        this.paddle.update();
+    };
+    Playscreen.prototype.checkCollision = function (a, b) {
+        return (a.left <= b.right &&
+            b.left <= a.right &&
+            a.top <= b.bottom &&
+            b.top <= a.bottom);
+    };
+    return Playscreen;
+}());
+window.addEventListener("load", function () {
+    new Game();
+});
 var Protero = (function () {
     function Protero() {
         var _this = this;
@@ -162,5 +193,19 @@ var Protero = (function () {
         this.element.style.top = this.yposition + "px";
     };
     return Protero;
+}());
+var StartScreen = (function () {
+    function StartScreen() {
+        var _this = this;
+        this.div = document.createElement("splash");
+        document.body.appendChild(this.div);
+        this.div.addEventListener("click", function () { return _this.splashClicked(); });
+        this.div.innerHTML = "START THE GAME";
+    }
+    StartScreen.prototype.update = function () {
+    };
+    StartScreen.prototype.splashClicked = function () {
+    };
+    return StartScreen;
 }());
 //# sourceMappingURL=main.js.map

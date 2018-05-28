@@ -2,8 +2,6 @@
     class Bubble { 
         private yposition:number 
         private xposition:number
-        private xspeed:number = 2
-        private yspeed:number = 2 
         private element:HTMLElement;
 
         
@@ -12,6 +10,7 @@
             
             this.element = document.createElement("bubble")
             document.body.appendChild(this.element)
+         
             
             this.xposition = this.randomNumber(0, window.innerWidth-130)
             this.yposition = this.randomNumber(0, window.innerHeight-130)
@@ -22,14 +21,15 @@
            
             this.element.style.left = this.xposition + "px";
             this.element.style.top = this.yposition + "px";
+            
+           
 
-            if(this.xposition > window.innerWidth || this.xposition < 0) {  
-                this.xspeed = this.xspeed * -1
-            }
-            if(this.yposition > window.innerHeight || this.yposition < 0) { 
-                this.yspeed = this.yspeed * -1
-            }
-            this.element.style.transform = `translate($(this.xposition)px, $(this.yposition)px)`
+        }
+
+        public dead() {  
+           (this.element.classList.add("dead"), 5000)
+      
+        
         }
        
 
