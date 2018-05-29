@@ -24,7 +24,7 @@ var Bubble = (function () {
 }());
 var Game = (function () {
     function Game() {
-        this.screen = new StartScreen();
+        this.screen = new StartScreen(this);
         this.gameLoop();
     }
     Game.prototype.gameLoop = function () {
@@ -33,7 +33,7 @@ var Game = (function () {
         requestAnimationFrame(function () { return _this.gameLoop(); });
     };
     Game.prototype.showPlayScreen = function () {
-        document.body.innerHTML = "niks";
+        document.body.innerHTML = "";
         this.screen = new Playscreen;
     };
     return Game;
@@ -108,7 +108,9 @@ var Paddle = (function () {
 var Playscreen = (function () {
     function Playscreen() {
         this.score = -2;
-        this.scoreElement = document.getElementsByTagName('score')[0];
+        this.scoreElement = document.createElement('score');
+        document.body.appendChild(this.scoreElement);
+        this.scoreElement.innerHTML = "Score: 0";
         this.bubbles = [];
         for (var i = 0; i < 10; i++) {
             var d = new Bubble();
@@ -126,6 +128,9 @@ var Playscreen = (function () {
                 b.dead();
                 this.score++;
                 this.scoreElement.innerHTML = "Score: " + this.score;
+            }
+            if (this.score == 1000) {
+                console.log("ik ben dood");
             }
             b.update();
         }
@@ -195,8 +200,9 @@ var Protero = (function () {
     return Protero;
 }());
 var StartScreen = (function () {
-    function StartScreen() {
+    function StartScreen(g) {
         var _this = this;
+        this.game = g;
         this.div = document.createElement("splash");
         document.body.appendChild(this.div);
         this.div.addEventListener("click", function () { return _this.splashClicked(); });
@@ -205,6 +211,7 @@ var StartScreen = (function () {
     StartScreen.prototype.update = function () {
     };
     StartScreen.prototype.splashClicked = function () {
+        this.game.showPlayScreen();
     };
     return StartScreen;
 }());

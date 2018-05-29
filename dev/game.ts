@@ -1,7 +1,7 @@
 class Game { 
     screen:any
     constructor(){ 
-        this.screen = new StartScreen()
+        this.screen = new StartScreen(this)
         this.gameLoop()
     }
 
@@ -13,7 +13,7 @@ requestAnimationFrame(()=>this.gameLoop())
 }    
 
 showPlayScreen() {
-    document.body.innerHTML = "niks"
+    document.body.innerHTML = ""
     this.screen = new Playscreen
 }
 

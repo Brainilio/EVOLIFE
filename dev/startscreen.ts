@@ -1,10 +1,11 @@
 class StartScreen {
 
     private div: HTMLElement
+    private game: Game
  
 
-    constructor() {
-  
+    constructor(g:Game) {
+        this.game = g
         this.div = document.createElement("splash")
         document.body.appendChild(this.div)
         this.div.addEventListener("click", ()=>this.splashClicked())
@@ -16,6 +17,6 @@ class StartScreen {
     }
 
     private splashClicked() {
-        // TODO: geef door aan 'game' dat het spel gestart moet worden
+       this.game.showPlayScreen()
     }
 }

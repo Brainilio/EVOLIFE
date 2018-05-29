@@ -10,7 +10,9 @@ class Playscreen {
 
     constructor() {
         
-        this.scoreElement = document.getElementsByTagName('score')[0]
+        this.scoreElement = document.createElement('score')
+        document.body.appendChild(this.scoreElement)
+        this.scoreElement.innerHTML = "Score: 0"
         this.bubbles = []
         
         
@@ -35,6 +37,9 @@ class Playscreen {
                 b.dead();
                 this.score++
                 this.scoreElement.innerHTML = "Score: "+ this.score
+            }
+            if(this.score == 1000) {  
+                console.log("ik ben dood")
             }
             b.update()
         }
