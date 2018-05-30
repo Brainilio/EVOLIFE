@@ -12,9 +12,15 @@ requestAnimationFrame(()=>this.gameLoop())
            
 }    
 
-showPlayScreen() {
-    document.body.innerHTML = ""
-    this.screen = new Playscreen
+emptyScreen() {  
+    document.body.innerHTML = " "
+}
+showPlayScreen(screen: Playscreen) {
+    this.screen = screen
+}
+
+showGameoverScreen(screen: GameOver) { 
+    this.screen = screen
 }
 
 }

@@ -1,5 +1,4 @@
-class StartScreen {
-
+class GameOver { 
     private div: HTMLElement
     private game: Game
  
@@ -9,7 +8,7 @@ class StartScreen {
         this.div = document.createElement("splash")
         document.body.appendChild(this.div)
         this.div.addEventListener("click", ()=>this.splashClicked())
-        this.div.innerHTML = "START THE GAME"
+        this.div.innerHTML = "YOU DIED, TRY AGAIN!"
     }
 
     public update(){
@@ -17,7 +16,7 @@ class StartScreen {
     }
 
     private splashClicked() {
-        this.game.emptyScreen()
-        this.game.showPlayScreen(new Playscreen(this.game))
+       this.game.emptyScreen()
+       this.game.showPlayScreen(new Playscreen(this.game))
     }
 }

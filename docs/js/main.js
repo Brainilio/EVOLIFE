@@ -22,6 +22,31 @@ var Bubble = (function () {
     };
     return Bubble;
 }());
+var deadBall = (function () {
+    function deadBall() {
+        this.element = document.createElement("deadball");
+        document.body.appendChild(this.element);
+        this.xposition = window.innerWidth;
+        this.yposition = Math.random() * (window.innerHeight - 100);
+        this.speedX = -3 - (Math.random() * 6);
+        this.speedY = Math.random() * 6 - 3;
+    }
+    deadBall.prototype.getRectangle = function () {
+        return this.element.getBoundingClientRect();
+    };
+    deadBall.prototype.update = function () {
+        this.xposition += this.speedX;
+        this.yposition += this.speedY;
+        if (this.yposition + this.getRectangle().height > window.innerHeight || this.yposition < 0) {
+            this.speedY *= -1;
+        }
+        if (this.xposition > window.innerWidth) {
+            this.speedX *= -1;
+        }
+        this.element.style.transform = "translate(" + this.xposition + "px, " + this.yposition + "px)";
+    };
+    return deadBall;
+}());
 var Game = (function () {
     function Game() {
         this.screen = new StartScreen(this);
@@ -32,11 +57,33 @@ var Game = (function () {
         this.screen.update();
         requestAnimationFrame(function () { return _this.gameLoop(); });
     };
-    Game.prototype.showPlayScreen = function () {
-        document.body.innerHTML = "";
-        this.screen = new Playscreen;
+    Game.prototype.emptyScreen = function () {
+        document.body.innerHTML = " ";
+    };
+    Game.prototype.showPlayScreen = function (screen) {
+        this.screen = screen;
+    };
+    Game.prototype.showGameoverScreen = function (screen) {
+        this.screen = screen;
     };
     return Game;
+}());
+var GameOver = (function () {
+    function GameOver(g) {
+        var _this = this;
+        this.game = g;
+        this.div = document.createElement("splash");
+        document.body.appendChild(this.div);
+        this.div.addEventListener("click", function () { return _this.splashClicked(); });
+        this.div.innerHTML = "YOU DIED, TRY AGAIN!";
+    }
+    GameOver.prototype.update = function () {
+    };
+    GameOver.prototype.splashClicked = function () {
+        this.game.emptyScreen();
+        this.game.showPlayScreen(new Playscreen(this.game));
+    };
+    return GameOver;
 }());
 var Paddle = (function () {
     function Paddle() {
@@ -106,18 +153,27 @@ var Paddle = (function () {
     return Paddle;
 }());
 var Playscreen = (function () {
-    function Playscreen() {
-        this.score = -2;
+    function Playscreen(g) {
+        this.score = 0;
+        this.deads = 0;
+        this.game = g;
         this.scoreElement = document.createElement('score');
         document.body.appendChild(this.scoreElement);
         this.scoreElement.innerHTML = "Score: 0";
+        this.deadElement = document.createElement('dead');
+        document.body.appendChild(this.deadElement);
+        this.deadElement.innerHTML = "Lives left: 3000 ";
         this.bubbles = [];
+        this.deadball = [];
         for (var i = 0; i < 10; i++) {
             var d = new Bubble();
             this.bubbles.push(d);
         }
+        for (var i = 0; i < 30; i++) {
+            var h = new deadBall();
+            this.deadball.push(h);
+        }
         this.paddle = new Paddle();
-        this.paddle;
         this.update();
     }
     Playscreen.prototype.update = function () {
@@ -129,12 +185,24 @@ var Playscreen = (function () {
                 this.score++;
                 this.scoreElement.innerHTML = "Score: " + this.score;
             }
-            if (this.score == 1000) {
-                console.log("ik ben dood");
+            if (this.score == 100) {
+                this.game.showGameoverScreen;
             }
             b.update();
         }
         this.paddle.update();
+        for (var _b = 0, _c = this.deadball; _b < _c.length; _b++) {
+            var e = _c[_b];
+            var hit = this.checkCollision(this.paddle.getRectangle(), e.getRectangle());
+            if (hit) {
+                this.deads--;
+                this.deadElement.innerHTML = "Lives left: " + this.deads;
+            }
+            if (this.deads == 0) {
+                this.game.showGameoverScreen;
+            }
+            e.update;
+        }
     };
     Playscreen.prototype.checkCollision = function (a, b) {
         return (a.left <= b.right &&
@@ -147,58 +215,6 @@ var Playscreen = (function () {
 window.addEventListener("load", function () {
     new Game();
 });
-var Protero = (function () {
-    function Protero() {
-        var _this = this;
-        this.yposition = Math.random() * window.innerHeight;
-        this.xposition = Math.random() * window.innerWidth;
-        this.leftSpeed = 0;
-        this.rightSpeed = 0;
-        this.downSpeed = 0;
-        this.upSpeed = 0;
-        this.element = document.createElement("protero");
-        document.body.appendChild(this.element);
-        window.addEventListener("keydown", function (e) { return _this.onKeyDown(e); });
-        window.addEventListener("keyup", function (e) { return _this.onKeyUp(e); });
-    }
-    Protero.prototype.onKeyDown = function (event) {
-        switch (event.keyCode) {
-            case 65:
-                this.upSpeed = 5;
-                break;
-            case 68:
-                this.downSpeed = 5;
-                break;
-            case 87:
-                this.leftSpeed = 5;
-                break;
-            case 83:
-                this.rightSpeed = 5;
-                break;
-        }
-    };
-    Protero.prototype.onKeyUp = function (event) {
-        switch (event.keyCode) {
-            case 65:
-                this.upSpeed = 0;
-                break;
-            case 68:
-                this.downSpeed = 0;
-                break;
-            case 87:
-                this.leftSpeed = 0;
-                break;
-            case 83:
-                this.rightSpeed = 0;
-                break;
-        }
-    };
-    Protero.prototype.update = function () {
-        this.element.style.left = this.xposition + "px";
-        this.element.style.top = this.yposition + "px";
-    };
-    return Protero;
-}());
 var StartScreen = (function () {
     function StartScreen(g) {
         var _this = this;
@@ -211,7 +227,8 @@ var StartScreen = (function () {
     StartScreen.prototype.update = function () {
     };
     StartScreen.prototype.splashClicked = function () {
-        this.game.showPlayScreen();
+        this.game.emptyScreen();
+        this.game.showPlayScreen(new Playscreen(this.game));
     };
     return StartScreen;
 }());

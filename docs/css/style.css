@@ -1,13 +1,3 @@
-protero { 
-  display: block;
-  position: absolute;
-  width: 50px; 
-  height: 50px; 
-  background-color: red;
-  animation: proteroanimation 4s ease-in-out infinite alternate;
- 
-
-}
 
 bubble { 
   display: block;
@@ -16,13 +6,14 @@ bubble {
   height: 50px; 
   background-color: white;
   left:50vw;
-  animation: bubbleup 4s linear infinite, proteroanimation 4s ease-in-out infinite alternate;
+  animation: bubbleup 4s ease-in-out infinite alternate;
   
   
 }
 
-@keyframes bubbleup {
-  0% {
+@keyframes bubbleup
+{
+  0% {  
     transform: translateY(100vh);
   }
   
@@ -31,21 +22,26 @@ bubble {
   }
 }
 
+deadball { 
+  display: block;
+  position: absolute;
+  width: 50px; 
+  height: 50px; 
+  background-color: black;
+
+  
+  
+  
+}
+
+
+
+
 body { 
     background-image: url(../img/water.png); 
     background-repeat: no-repeat;
     width: 100%; height: 100%; 
     background-size: cover; 
-}
-
-@keyframes proteroanimation {
-  0% {
-    transform: translateY(20px);
-  }
-  
-  100% {
-    transform: translateY(80px);
-  }
 }
 
 
