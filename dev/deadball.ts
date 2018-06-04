@@ -32,8 +32,8 @@ class deadBall {
     public update(){ 
         this.xposition += this.speedX
         this.yposition += this.speedY
-
-       if( this.yposition + this.getRectangle().height > window.innerHeight || this.yposition < 0) { 
+        
+        if( this.yposition + this.getRectangle().height > window.innerHeight || this.yposition < 0) { 
             this.speedY *= -1
         }
 
@@ -41,15 +41,21 @@ class deadBall {
             this.speedX *= -1
         } 
                         
-        this.element.style.transform = `translate(${this.xposition}px, ${this.yposition}px)` 
+        this.element.style.left = this.xposition + "px";
+        this.element.style.top = this.yposition + "px";
+        
     }
-       
 
-
-
-
-
+    dead() { 
+        (this.element.classList.add("dead"), 5000)
+    }
 }
+
+
+
+
+
+
 
 
 

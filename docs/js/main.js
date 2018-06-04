@@ -43,7 +43,11 @@ var deadBall = (function () {
         if (this.xposition > window.innerWidth) {
             this.speedX *= -1;
         }
-        this.element.style.transform = "translate(" + this.xposition + "px, " + this.yposition + "px)";
+        this.element.style.left = this.xposition + "px";
+        this.element.style.top = this.yposition + "px";
+    };
+    deadBall.prototype.dead = function () {
+        (this.element.classList.add("dead"), 5000);
     };
     return deadBall;
 }());
@@ -109,16 +113,16 @@ var Paddle = (function () {
     Paddle.prototype.onKeyDown = function (e) {
         switch (e.keyCode) {
             case this.upkey:
-                this.upSpeed = 5;
+                this.upSpeed = 8;
                 break;
             case this.downkey:
-                this.downSpeed = 5;
+                this.downSpeed = 8;
                 break;
             case this.leftkey:
-                this.leftSpeed = 5;
+                this.leftSpeed = 8;
                 break;
             case this.rightkey:
-                this.rightSpeed = 5;
+                this.rightSpeed = 8;
                 break;
         }
     };
@@ -156,6 +160,8 @@ var Playscreen = (function () {
     function Playscreen(g) {
         this.score = 0;
         this.deads = 0;
+        this.deadball = [];
+        this.level = 0.05;
         this.game = g;
         this.scoreElement = document.createElement('score');
         document.body.appendChild(this.scoreElement);
@@ -165,43 +171,40 @@ var Playscreen = (function () {
         this.deadElement.innerHTML = "Lives left: 3000 ";
         this.bubbles = [];
         this.deadball = [];
-        for (var i = 0; i < 10; i++) {
+        for (var i = 0; i < 25; i++) {
             var d = new Bubble();
             this.bubbles.push(d);
-        }
-        for (var i = 0; i < 30; i++) {
-            var h = new deadBall();
-            this.deadball.push(h);
         }
         this.paddle = new Paddle();
         this.update();
     }
     Playscreen.prototype.update = function () {
         for (var _i = 0, _a = this.bubbles; _i < _a.length; _i++) {
-            var b = _a[_i];
-            var hit = this.checkCollision(this.paddle.getRectangle(), b.getRectangle());
+            var b_1 = _a[_i];
+            var hit = this.checkCollision(this.paddle.getRectangle(), b_1.getRectangle());
             if (hit) {
-                b.dead();
+                b_1.dead();
+                this.level += 0.001;
                 this.score++;
                 this.scoreElement.innerHTML = "Score: " + this.score;
             }
             if (this.score == 100) {
                 this.game.showGameoverScreen;
             }
-            b.update();
+            b_1.update();
         }
         this.paddle.update();
         for (var _b = 0, _c = this.deadball; _b < _c.length; _b++) {
-            var e = _c[_b];
-            var hit = this.checkCollision(this.paddle.getRectangle(), e.getRectangle());
-            if (hit) {
-                this.deads--;
-                this.deadElement.innerHTML = "Lives left: " + this.deads;
+            var b = _c[_b];
+            if (this.checkCollision(b.getRectangle(), this.paddle.getRectangle())) {
+                this.deads -= 1;
+                this.deadElement.innerHTML = "Score: " + this.deads;
+                b.dead();
             }
-            if (this.deads == 0) {
-                this.game.showGameoverScreen;
-            }
-            e.update;
+            b.update();
+        }
+        if (Math.random() < this.level) {
+            this.deadball.push(new deadBall());
         }
     };
     Playscreen.prototype.checkCollision = function (a, b) {

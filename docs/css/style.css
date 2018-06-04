@@ -14,11 +14,11 @@ bubble {
 @keyframes bubbleup
 {
   0% {  
-    transform: translateY(100vh);
+    transform: translateY(20px);
   }
   
   100% {
-    transform: translateY(0vh);
+    transform: translateY(80px);
   }
 }
 
@@ -28,10 +28,22 @@ deadball {
   width: 50px; 
   height: 50px; 
   background-color: black;
+  animation: deadup 4s ease-in-out infinite alternate;
+  
+  
+  
+}
 
+
+@keyframes deadup
+{
+  0% {  
+    transform: translateY(20px);
+  }
   
-  
-  
+  100% {
+    transform: translateY(80px);
+  }
 }
 
 
@@ -56,12 +68,7 @@ body {
 }
 
 .dead { 
-  display: block;
-  position: absolute;
-  width: 50px; 
-  height: 50px;
-  background-color: red; 
-  left:50vw;
+  display: none;
 
    
    

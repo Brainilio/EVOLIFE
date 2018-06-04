@@ -38,16 +38,16 @@ class Paddle {
     private onKeyDown(e: KeyboardEvent): void {
         switch (e.keyCode) {
             case this.upkey:
-                this.upSpeed = 5
+                this.upSpeed = 8
                 break
             case this.downkey:
-                this.downSpeed = 5
+                this.downSpeed = 8
                 break
             case this.leftkey:
-                this.leftSpeed = 5
+                this.leftSpeed = 8
                 break 
             case this.rightkey: 
-                this.rightSpeed = 5
+                this.rightSpeed = 8
                 break 
 
         }

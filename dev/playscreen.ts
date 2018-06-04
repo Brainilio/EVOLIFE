@@ -6,9 +6,10 @@ class Playscreen {
     private scoreElement:Element
     private score:number = 0
     private deads:number = 0
-    private deadball: deadBall[]
+    private deadball: deadBall[] = []
     private deadElement:Element
     private game: Game
+    private level:number = 0.05;
 
     
 
@@ -26,20 +27,19 @@ class Playscreen {
         this.deadball = []
         
         
-        for(let i = 0; i<10; i++) { 
+        for(let i = 0; i<25; i++) { 
             let d = new Bubble()
             this.bubbles.push(d)
            
           
         }
-        for(let i = 0; i<30; i++) {  
-            let h = new deadBall()
-            this.deadball.push(h)
-        }
       
     
         this.paddle = new Paddle()
         this.update()
+
+
+        
   
         }
    
@@ -48,6 +48,7 @@ class Playscreen {
             let hit = this.checkCollision(this.paddle.getRectangle(), b.getRectangle())
             if(hit){
                 b.dead();
+                this.level+=0.001
                 this.score++
                 this.scoreElement.innerHTML = "Score: "+ this.score
             }
@@ -59,19 +60,27 @@ class Playscreen {
 
         this.paddle.update()
 
-         for (let e of this.deadball) {  
-        let hit = this.checkCollision(this.paddle.getRectangle(), e.getRectangle())
-        if(hit){
-         
-            this.deads--
-            this.deadElement.innerHTML = "Lives left: " + this.deads
-        }
-        if(this.deads == 0) {  
-            this.game.showGameoverScreen
-        }
-            e.update
+
+    
 
 
+    for (var b of this.deadball) {
+
+        // ball hits paddle
+        if (this.checkCollision(b.getRectangle(), this.paddle.getRectangle())) {
+          this.deads-=1
+          this.deadElement.innerHTML = "Score: "+ this.deads
+          b.dead(); 
+        }
+
+        // ball leaves the screen: gameover!
+       
+
+        b.update()
+    }
+
+    if (Math.random() < this.level) {
+        this.deadball.push(new deadBall());
     }
  
 }    
