@@ -40,14 +40,13 @@ class deadBall {
         if (this.xposition > window.innerWidth) {
             this.speedX *= -1
         } 
-                        
-        this.element.style.left = this.xposition + "px";
-        this.element.style.top = this.yposition + "px";
+        this.element.style.transform = `translate(${this.xposition}px, ${this.yposition}px)`      
         
     }
 
     dead() { 
-        (this.element.classList.add("dead"), 5000)
+       //  (this.element.classList.add("dead"), 5000)
+            this.element.remove(); 
     }
 }
 

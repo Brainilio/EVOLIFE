@@ -77,6 +77,7 @@ class Paddle {
         // check of de paddle binnen beeld blijft
         if (newY > 0 && newY + 100 < window.innerHeight) this.y = newY
         if (newX > 0 && newX + 100 < window.innerWidth) this.x = newX
+        
         this.div.style.transform = `translate(${this.x}px, ${this.y}px)`
 
     }

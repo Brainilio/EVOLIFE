@@ -1,25 +1,26 @@
 
-bubble { 
-  display: block;
-  position: absolute;
-  width: 50px; 
-  height: 50px; 
-  background-color: white;
-  left:50vw;
-  animation: bubbleup 4s ease-in-out infinite alternate;
-  
-  
+body { 
+  background-image: url(../img/water.png); 
+  background-repeat: no-repeat;
+  width: 100%; height: 100%; 
+  background-size: cover; 
 }
 
-@keyframes bubbleup
-{
-  0% {  
-    transform: translateY(20px);
-  }
+
+* {
+  box-sizing: border-box;
+}
+
+bubble { 
+  position: absolute;
+  display: block;
+  background-image: url(../img/evolution.png);
+  background-repeat: no-repeat;
+  width: 35%  ; height: 100%;
+ 
   
-  100% {
-    transform: translateY(80px);
-  }
+  
+  
 }
 
 deadball { 
@@ -28,51 +29,22 @@ deadball {
   width: 50px; 
   height: 50px; 
   background-color: black;
-  animation: deadup 4s ease-in-out infinite alternate;
-  
-  
   
 }
-
-
-@keyframes deadup
-{
-  0% {  
-    transform: translateY(20px);
-  }
-  
-  100% {
-    transform: translateY(80px);
-  }
-}
-
-
-
-
-body { 
-    background-image: url(../img/water.png); 
-    background-repeat: no-repeat;
-    width: 100%; height: 100%; 
-    background-size: cover; 
-}
-
-
 
   paddle {
-    background-color:black;
-    width:25px; height:100px;
-    display: block;
     position: absolute;
+    display: block;
+    background-image: url(http://img09.deviantart.net/80ee/i/2017/040/7/c/link_sprite_sheet_by_tiozacdasgalaxias-dayh0s6.png);
+    background-repeat: no-repeat;
+    width: 100px; height: 110px; 
+    transform: scaleX(-1);
+    border:2px solid yellow;
     
 
 }
 
 .dead { 
   display: none;
-
-   
-   
-
-
 }
 

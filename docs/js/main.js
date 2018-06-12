@@ -1,17 +1,30 @@
 "use strict";
 var Bubble = (function () {
     function Bubble() {
+        this.frames = 10;
+        this.frame = 0;
+        this.frameWidth = 850;
+        this.speedcounter = 0;
+        this.frame = 0;
         this.element = document.createElement("bubble");
         document.body.appendChild(this.element);
         this.xposition = this.randomNumber(0, window.innerWidth - 130);
         this.yposition = this.randomNumber(0, window.innerHeight - 130);
     }
     Bubble.prototype.update = function () {
-        this.element.style.left = this.xposition + "px";
-        this.element.style.top = this.yposition + "px";
+        this.speedcounter++;
+        var framerate = 30;
+        if (this.speedcounter % framerate == 0) {
+            this.frame++;
+        }
+        if (this.frame >= this.frames)
+            this.frame = 1;
+        console.log(this.frame);
+        var pos = 0 - (this.frame * this.frameWidth);
+        this.element.style.backgroundPosition = pos + 'px,  1000px';
+        this.element.style.transform = "translate(" + this.xposition + "px, " + this.yposition + "px)";
     };
     Bubble.prototype.dead = function () {
-        (this.element.classList.add("dead"), 5000);
     };
     Bubble.prototype.randomNumber = function (min, max) {
         var a = Math.floor(Math.random() * (max - min + 1)) + min;
@@ -43,11 +56,10 @@ var deadBall = (function () {
         if (this.xposition > window.innerWidth) {
             this.speedX *= -1;
         }
-        this.element.style.left = this.xposition + "px";
-        this.element.style.top = this.yposition + "px";
+        this.element.style.transform = "translate(" + this.xposition + "px, " + this.yposition + "px)";
     };
     deadBall.prototype.dead = function () {
-        (this.element.classList.add("dead"), 5000);
+        this.element.remove();
     };
     return deadBall;
 }());
@@ -161,7 +173,7 @@ var Playscreen = (function () {
         this.score = 0;
         this.deads = 0;
         this.deadball = [];
-        this.level = 0.05;
+        this.level = 0.01;
         this.game = g;
         this.scoreElement = document.createElement('score');
         document.body.appendChild(this.scoreElement);
@@ -171,7 +183,7 @@ var Playscreen = (function () {
         this.deadElement.innerHTML = "Lives left: 3000 ";
         this.bubbles = [];
         this.deadball = [];
-        for (var i = 0; i < 25; i++) {
+        for (var i = 0; i < 1; i++) {
             var d = new Bubble();
             this.bubbles.push(d);
         }
@@ -184,7 +196,6 @@ var Playscreen = (function () {
             var hit = this.checkCollision(this.paddle.getRectangle(), b_1.getRectangle());
             if (hit) {
                 b_1.dead();
-                this.level += 0.001;
                 this.score++;
                 this.scoreElement.innerHTML = "Score: " + this.score;
             }
@@ -197,7 +208,7 @@ var Playscreen = (function () {
         for (var _b = 0, _c = this.deadball; _b < _c.length; _b++) {
             var b = _c[_b];
             if (this.checkCollision(b.getRectangle(), this.paddle.getRectangle())) {
-                this.deads -= 1;
+                this.deads--;
                 this.deadElement.innerHTML = "Score: " + this.deads;
                 b.dead();
             }

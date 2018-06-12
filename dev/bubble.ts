@@ -4,9 +4,19 @@
         private xposition:number
         private element:HTMLElement;
 
+        frames = 10
+        frame = 0
+        frameWidth = 850
+        speedcounter = 0
+
+
+
         
     
         constructor() { 
+            this.frame = 0    
+
+
             
             this.element = document.createElement("bubble")
             document.body.appendChild(this.element)
@@ -19,15 +29,27 @@
         }
         public update(){ 
            
-            this.element.style.left = this.xposition + "px";
-            this.element.style.top = this.yposition + "px";
-            
-           
+            this.speedcounter++
 
+                        let framerate = 30
+                        if(this.speedcounter%framerate == 0) 
+                        { 
+                            this.frame++
+                            
+                        }
+                        if(this.frame >= this.frames) this.frame = 1 
+
+                        console.log(this.frame);
+                        
+
+                        let pos = 0 - (this.frame*this.frameWidth)
+                        this.element.style.backgroundPosition = pos + 'px,  1000px'
+           
+                        this.element.style.transform = `translate(${this.xposition}px, ${this.yposition}px)`  
         }
 
         public dead() {  
-           (this.element.classList.add("dead"), 5000)
+          // (this.element.classList.add("dead"), 5000)
       
         
         }

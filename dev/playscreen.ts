@@ -9,7 +9,7 @@ class Playscreen {
     private deadball: deadBall[] = []
     private deadElement:Element
     private game: Game
-    private level:number = 0.05;
+    private level:number = 0.01;
 
     
 
@@ -27,7 +27,7 @@ class Playscreen {
         this.deadball = []
         
         
-        for(let i = 0; i<25; i++) { 
+        for(let i = 0; i<1; i++) { 
             let d = new Bubble()
             this.bubbles.push(d)
            
@@ -48,7 +48,7 @@ class Playscreen {
             let hit = this.checkCollision(this.paddle.getRectangle(), b.getRectangle())
             if(hit){
                 b.dead();
-                this.level+=0.001
+                
                 this.score++
                 this.scoreElement.innerHTML = "Score: "+ this.score
             }
@@ -68,7 +68,7 @@ class Playscreen {
 
         // ball hits paddle
         if (this.checkCollision(b.getRectangle(), this.paddle.getRectangle())) {
-          this.deads-=1
+          this.deads--
           this.deadElement.innerHTML = "Score: "+ this.deads
           b.dead(); 
         }
